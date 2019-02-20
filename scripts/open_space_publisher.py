@@ -5,7 +5,8 @@ from sensor_msgs.msg import LaserScan
 from ros_exercises.msg import OpenSpace
 
 def callback(scan):
-    pub = rospy.Publisher('open_space', OpenSpace, queue_size=10)
+    pub_topic = rospy.get_param("/open_space_publisher/pub_topic")
+    pub = rospy.Publisher(pub_topic, OpenSpace, queue_size=10)
     open_space = OpenSpace()
     open_space.distance = scan.ranges[0] 
     open_space.angle = scan.angle_min
@@ -18,9 +19,10 @@ def callback(scan):
 
 
 def listener():
-    rospy.init_node('open_space_publisher', anonymous=True)
-    rospy.Subscriber("fake_scan", LaserScan, callback)
+    sub_topic = rospy.get_param("/open_space_publisher/sub_topic")
+    rospy.Subscriber(sub_topic, LaserScan, callback)
     rospy.spin()
 
 if __name__ == '__main__':
+    rospy.init_node('open_space_publisher', anonymous=True)
     listener()

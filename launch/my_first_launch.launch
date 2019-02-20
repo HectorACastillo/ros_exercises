@@ -1,7 +1,18 @@
 <launch>
 	<node pkg="ros_exercises" type="simple_publisher.py" name="simple_publisher" />
 	<node pkg="ros_exercises" type="simple_subscriber.py" name="simple_subscriber" />
-	<node pkg="ros_exercises" type="fake_scan_publisher.py" name="fake_scan_subscriber" />
-	<node pkg="ros_exercises" type="open_space_publisher.py" name="open_space_publisher" />
+	<node pkg="ros_exercises" type="fake_scan_publisher.py" name="fake_scan_publisher">
+		<rosparam param="pub_topic">"fake_scan"</rosparam>
+		<rosparam param="pub_rate">20</rosparam>
+		<rosparam param="angle_min">-2.0944</rosparam>
+		<rosparam param="angle_max">2.0944</rosparam>
+		<rosparam param="range_min">1.0</rosparam>
+		<rosparam param="range_max">10.0</rosparam>
+		<rosparam param="angle_increment">0.010472</rosparam>
+	</node>
+	<node pkg="ros_exercises" type="open_space_publisher.py" name="open_space_publisher">
+		<rosparam param="pub_topic">"open_space"</rosparam>
+		<rosparam param="sub_topic">"fake_scan"</rosparam>
+	</node>
 
 </launch>
